@@ -19,3 +19,13 @@ input[type="checkbox"] {
 .form-group {
   margin-bottom: 10px;
 }
+
+/* Стили для блока количества владельцев */
+.form-group#owners-group {
+  display: none;
+}
+
+/* Стили для блока количества владельцев при выборе опции "подержанный" */
+#used:checked ~ .form-group#owners-group {
+  display: block;
+}

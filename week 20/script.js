@@ -27,128 +27,91 @@ const prices = {
 };
 
 // Получаем элементы формы
-const brandSelect = document.getElementById("brand");
-const modelSelect = document.getElementById("model");
 const fuelInputs = document.querySelectorAll('input[name="fuel"]');
 const engineVolumeInput = document.getElementById("engineVolume");
 const conditionInputs = document.querySelectorAll('input[name="condition"]');
 const ownersInputs = document.querySelectorAll('input[name="owners"]');
 const paymentMethodSelect = document.getElementById("payment-method");
-const calculateBtn = document.getElementById("calculate-btn");
 const resultDiv = document.getElementById("result");
 
-// Событие на изменение марки авто
+// Получаем модели автомобилей для выбранной марки
+const brandSelect = document.getElementById("brand");
+const modelSelect = document.getElementById("model");
 brandSelect.addEventListener("change", () => {
-  // Разблокируем элемент модели автомобиля
-  modelSelect.disabled = false;
-
-  // Очищаем список опций модели автомобиля
+  const models = prices[brandSelect.value];
   modelSelect.innerHTML = "";
-
-  // Получаем выбранную марку автомобиля
-  const selectedBrand = this.value;
-
-  // Получаем модели автомобилей для выбранной марки
-  const models = prices[selectedBrand];
-
-  // Создаем новый элемент опции для каждой модели и добавляем его в список
+  modelSelect.disabled = false;
   for (const model in models) {
     const option = document.createElement("option");
     option.value = model;
-    option.textContent = model;
-    modelSelect.appendChild(option);
-  }
-});
-
-// Задаем обработчик события при изменении выбора марки
-brandSelect.addEventListener("change", () => {
-  // Получаем выбранную марку автомобиля
-  const selectedBrand = brandSelect.value;
-
-  // Очищаем список моделей автомобилей
-  modelSelect.innerHTML = "";
-
-  // Если выбрана марка автомобиля, которой нет в нашей базе данных, то выходим из функции
-  if (!prices[selectedBrand]) {
-    return;
-  }
-
-  // Добавляем опции для элемента select с id="model"
-  const models = Object.keys(prices[selectedBrand]);
-  for (let i = 0; i < models.length; i++) {
-    const option = document.createElement("option");
-    option.text = models[i];
-    option.value = models[i];
+    option.text = model;
     modelSelect.add(option);
   }
-
-  // Включаем элемент select с id="model"
-  modelSelect.disabled = false;
 });
 
-const getCarPrice = () => {
-  const brand = brandSelect.value.toLowerCase();
-  const model = modelSelect.value.toLowerCase();
-  const engine = engineSelect.value;
-  const engineVolume = parseFloat(engineVolumeInput.value);
+// Получаем радиокнопки для типа автомобиля
+const usedRadio = document.getElementById("used");
+const ownersGroup = document.getElementById("owners-group");
 
-  let price = 0;
-
-  if (brand in prices && model in prices[brand]) {
-    price = prices[brand][model];
+// Обработчик события для выбора типа автомобиля
+usedRadio.addEventListener("change", () => {
+  if (usedRadio.checked) {
+    ownersGroup.style.display = "block";
+  } else {
+    ownersGroup.style.display = "none";
   }
+});
 
-  return price;
+const newRadio = document.getElementById("new");
+
+newRadio.addEventListener("change", () => {
+  if (newRadio.checked) {
+    ownersGroup.style.display = "none";
+  } else {
+    ownersGroup.style.display = "block";
+  }
+});
+
+const calculateBtn = document.getElementById("calculate-btn");
+// добавляем обработчик события "click" для кнопки "Рассчитать стоимость"
+calculateBtn.onclick = () => {
+  calculatePrice();
 };
 
-// функция для получения стоимости автомобиля
-function getCarPrice() {
-  let brand = document.getElementById("brand").value;
-  let model = document.getElementById("model").value;
-  let fuel = document.querySelector('input[name="fuel"]:checked').value;
-  let engineVolume = parseFloat(document.getElementById("engineVolume").value);
-  let condition = document.querySelector(
+// получаем значения выбранных параметров
+function calculatePrice() {
+  const brand = document.getElementById("brand").value;
+  const model = document.getElementById("model").value;
+  const fuel = document.querySelector('input[name="fuel"]:checked').value;
+  const engineVolume = parseFloat(
+    document.getElementById("engineVolume").value
+  );
+  const condition = document.querySelector(
     'input[name="condition"]:checked'
   ).value;
-  let ownerCount =
-    condition === "used"
-      ? document.querySelector('input[name="owner-count"]:checked').value
-      : null;
-  let paymentMethod = document.querySelector(
-    'input[name="payment-method"]:checked'
-  ).value;
+  const owners = document.querySelector('input[name="owners"]:checked').value;
+  const paymentMethod = document.getElementById("payment-method").value;
 
-  let car = data.find(
-    (item) => item.brand === brand && item.models.some((m) => m.model === model)
-  );
+  const basePrice = prices[brand][model];
+  let conditionCoefficient = 1;
+  let ownersCoefficient = 1;
+  let paymentCoefficient = 1;
 
-  let modelData = car.models.find((m) => m.model === model);
-
-  let engineData = modelData.engines.find((e) => e.value === engineVolume);
-
-  let conditionMultiplier =
-    condition === "new" ? 1 : ownerCount === "1-2" ? 0.8 : 0.6;
-
-  let price =
-    modelData.basePrice +
-    engineData.price +
-    (fuel === "electricity" ? modelData.electricityPrice : 0) +
-    (conditionMultiplier - 1) * modelData.basePrice * 0.2;
-
-  if (paymentMethod === "card") {
-    price = price * 1.02;
-  } else if (paymentMethod === "legal-entity") {
-    price = price * 0.98;
+  if (condition === "used") {
+    conditionCoefficient = 0.7;
   }
 
-  return price.toFixed(2);
-}
+  if (owners === "3+") {
+    ownersCoefficient = 0.9;
+  }
 
-// функция для обновления результата на странице
-function updateResult() {
-  let price = getCarPrice();
+  if (paymentMethod === "cash") {
+    paymentCoefficient = 0.95;
+  }
 
-  let result = document.getElementById("result");
+  const finalPrice =
+    basePrice * conditionCoefficient * ownersCoefficient * paymentCoefficient;
 
-  result.innerHTML = `Стоимость автомобиля: ${price} $.`;
+  const resultElement = document.getElementById("result");
+  resultElement.innerHTML = `Стоимость автомобиля: ${finalPrice} $.`;
 }
