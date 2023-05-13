@@ -1,25 +1,3 @@
-body {
-  font-family: Arial, sans-serif;
-}
-
-h2 {
-  margin-top: 0;
-}
-
-label {
-  display: block;
-  margin-bottom: 5px;
-}
-
-input[type="radio"],
-input[type="checkbox"] {
-  margin-right: 5px;
-}
-
-.form-group {
-  margin-bottom: 10px;
-}
-
 /* Стили для блока количества владельцев */
 .form-group#owners-group {
   display: none;
@@ -28,4 +6,111 @@ input[type="checkbox"] {
 /* Стили для блока количества владельцев при выборе опции "подержанный" */
 #used:checked ~ .form-group#owners-group {
   display: block;
+}
+
+body {
+  font-size: 18px;
+  font-family: Arial, sans-serif;
+  text-align: center;
+  background-color: #808ee5;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  margin-top: 0;
+  text-align: center;
+}
+
+/* Задаем стили для label */
+label {
+  display: flex;
+  margin-bottom: 5px;
+  text-align: center;
+}
+
+/* Задаем стили для .form-group */
+.form-group {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+/* Задаем стили для описания */
+.form-group span {
+  margin-left: 10px;
+  font-size: 1.1rem;
+  color: #444;
+}
+
+/* Задаем стили для чекбоксов */
+input[type="checkbox"] {
+  margin-right: 10px;
+}
+
+/* Задаем стили для эффекта наведения на чекбоксы */
+input[type="checkbox"]:hover + span {
+  color: #4caf50;
+}
+
+/* Задаем стили для радио-кнопок */
+input[type="radio"] {
+  margin-right: 5px;
+}
+
+/* Задаем стили для инпутов и радио-кнопок */
+input[type="text"],
+input[type="number"],
+input[type="radio"],
+input[type="checkbox"] {
+  font-size: 1.2rem;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+}
+
+/* изменение цвета фона и цвета текста для кнопки */
+button {
+  background-color: #7c6ced;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+
+/* эффект наведения на кнопки */
+button:hover {
+  background-color: #3f1f82;
+}
+
+/* Задаем стили для селектов */
+select {
+  font-size: 1.2rem;
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  width: 100%;
+}
+
+/* Задаем стили для формы */
+form {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: white;
+  border-radius: 5px;
+  box-shadow: 0 0 10px #ccc;
+}
+
+/* Задаем стили для сообщений об ошибках */
+.error-message {
+  color: #e74c3c;
+  margin-top: 5px;
 }

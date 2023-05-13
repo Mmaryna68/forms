@@ -12,7 +12,7 @@
                <h2>Калькулятор расчёта стоимости автомобиля</h2>
                <form>
                  <div>
-                   <label>Марка автомобиля:</label>
+                   <label>Марка автомобиля:
                    <select id="brand">
                      <option value="">Выберите марку автомобиля</option>
                      <option value="renault">Reno</option>
@@ -20,56 +20,67 @@
                      <option value="mazda">Mazda</option>
                      <option value="jaguar">Jaguar</option>
                    </select>
+                </label>
                  </div>
                  <div>
-                   <label>Модель автомобиля:</label>
+                   <label>Модель автомобиля:
                    <select id="model" disabled>
                      <option value="">Выберите модель автомобиля</option>
                    </select>
+                </label>
                  </div>
                  <div>
                    <label>Топливо:</label>
-                   <input type="radio" name="fuel" value="gasoline" id="gasoline">
-                   <label for="gasoline">Бензин</label>
-                   <input type="radio" name="fuel" value="diesel" id="diesel">
-                   <label for="diesel">Дизель</label>
-                   <input type="radio" name="fuel" value="gas" id="gas">
-                   <label for="gas">Газ</label>
-                   <input type="radio" name="fuel" value="electricity" id="electricity">
-                   <label for="electricity">Электричество</label>
+                   <label for="gasoline">Бензин
+                    <input type="radio" name="fuel" value="gasoline" id="gasoline">
+                   </label>
+                   <label for="diesel">Дизель
+                    <input type="radio" name="fuel" value="diesel" id="diesel">
+                   </label>
+                   <label for="gas">Газ
+                    <input type="radio" name="fuel" value="gas" id="gas">
+                   </label>
+                   <label for="electricity">Электричество
+                    <input type="radio" name="fuel" value="electricity" id="electricity">
+                   </label>
                  </div>
                  <div>
-                   <label>Объём двигателя (литры):</label>
+                   <label>Объём двигателя (литры):
                    <input type="number" id="engineVolume" step="0.1" min="1.1" max="3.5">
+                </label>
                  </div>
                  <div>
                    <label>Состояние автомобиля:</label>
-                   <input type="radio" name="condition" value="new" id="new"/>
-                   <label for="new">Новый</label>
+                   <label for="new">Новый
+                    <input type="radio" name="condition" value="new" id="new"/>
+                   </label>
                    </div>
                    <div>
-                   <input type="radio" name="condition" value="used" id="used" />
-                   <label for="used">Подержанный</label>
-                   </div>
+                   <label for="used">Подержанный
+                    <input type="radio" name="condition" value="used" id="used" />
+                   </label>
                    </div>
                    <div class="form-group" id="owners-group">
                    <label for="owners">Количество владельцев:</label>
                    <div>
-                   <input type="radio" name="owners" value="1-2" id="1-2" />
-                   <label for="1-2">1-2 владельца</label>
+                   <label for="1-2">1-2 владельца
+                    <input type="radio" name="owners" value="1-2" id="1-2" />
+                   </label>
                    </div>
                    <div>
-                   <input type="radio" name="owners" value="3+" id="3+" />
-                   <label for="3+">3 и более владельцев</label>
+                   <label for="3+">3 и более владельцев
+                    <input type="radio" name="owners" value="3+" id="3+" />
+                   </label>
                    </div>
                    </div>
                    <div class="form-group">
-                   <label for="payment-method">Способ оплаты:</label>
+                   <label for="payment-method">Способ оплаты:
                    <select name="payment-method" id="payment-method">
                    <option value="card">Картой</option>
                    <option value="cash">Наличными</option>
                    <option value="legal-entity">Счёт на юридическое лицо</option>
                    </select>
+                   </label>
                    </div>
                    <div class="form-group">
                    <button type="button" id="calculate-btn">Рассчитать стоимость</button>
