@@ -89,7 +89,6 @@ function calculatePrice() {
   const condition = document.querySelector(
     'input[name="condition"]:checked'
   ).value;
-  const owners = document.querySelector('input[name="owners"]:checked').value;
   const paymentMethod = document.getElementById("payment-method").value;
 
   const basePrice = prices[brand][model];
@@ -99,6 +98,11 @@ function calculatePrice() {
 
   if (condition === "used") {
     conditionCoefficient = 0.7;
+  }
+
+  let owners = "1-2"; // Значение по умолчанию для нового автомобиля (тип "new")
+  if (condition === "used") {
+    owners = document.querySelector('input[name="owners"]:checked').value;
   }
 
   if (owners === "3+") {
